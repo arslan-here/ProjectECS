@@ -1,0 +1,262 @@
+﻿@model ProjectECS.Models.PreferredService
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+
+
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "PreferredServices", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>PreferredService</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.PreferredServiceID)
+
+    @*@Html.HiddenFor(model => model.Client_id, new { @Value = ViewBag.ClientId })*@
+
+    @Html.HiddenFor(model => model.Client_id)
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Client_id, "Client_id", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Client_id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Client_id, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductID, "ProductID", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.ProductID, ViewBag.ProductID as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ServicePreferred, "ServicePreferred", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("ServicePreferred", ViewBag.ServicePreferred as SelectList, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ServicePreferred, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Charges_id, "Charges_id", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("Charges_id", ViewBag.Charges_id as SelectList, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Charges_id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.ServiceDays, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ServiceDays, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ServiceDays, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ServiceDays, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.ServiceDays, new { @class = "form-control", id = "ServiceDays", type = "number", min = "1" })
+
+            <span id="serviceDaysError" class="text-danger"></span>
+            @Html.ValidationMessageFor(model => model.ServiceDays, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.StartDate, "{0:yyyy-MM-dd}", new { @class = "form-control", id = "StartDate", type = "date" })
+            @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.EndDate, "{0:yyyy-MM-dd}", new { @class = "form-control", id = "EndDate", type = "date", @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#ServicePreferred").change(function () {
+            console.log("ServicePreferred changed");
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                cache: 'false',
+                url: '@Url.Action("getCharges", "PreferredServices")',
+                data: { getid: $("#ServicePreferred").val() },
+                success: function (data) {
+                    console.log(data); // Check the returned data
+                    $("#Charges_id").empty();
+                    $.each(data, function (index, row) {
+                        $("#Charges_id").append("<option value='" + row.ChargesID + "'> " + row.ChargesPerDay + "</option>")
+                    });
+                }
+            });
+        }); 
+         
+         
+
+        // Disable past dates in the StartDate field
+        var today = new Date().toISOString().split("T")[0];
+        $("#StartDate").attr("min", today);
+
+        $("#ServiceDays, #StartDate").on("input change", function () {
+            validateServiceDays(); // Call the validation function
+            var serviceDays = parseInt($("#ServiceDays").val(), 10);
+            var startDate = new Date($("#StartDate").val());
+
+            if (!(startDate instanceof Date) || isNaN(startDate.getTime())) {
+                startDate = new Date();
+            }
+
+            if (!isNaN(serviceDays) && serviceDays > 0) {
+                // Enable the EndDate field if ServiceDays is greater than 0
+                $("#EndDate").prop("disabled", false);
+                updateEndDate(serviceDays, startDate);
+            } else {
+                // Disable the EndDate field if ServiceDays is 0 or empty
+                $("#EndDate").prop("disabled", true);
+                $("#EndDate").val(defaultEndDate); // Set the default value of EndDate when disabled
+            }
+        });
+
+        function updateEndDate(serviceDays, startDate) {
+            if (!(startDate instanceof Date) || isNaN(startDate.getTime())) {
+                startDate = new Date();
+            }
+            var endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + serviceDays);
+
+            if ($("#ServiceDays").val() === "" && $("#StartDate").val() === formatDate(startDate)) {
+                // ServiceDays and StartDate are unchanged, set default end date as next day's date
+                endDate.setDate(endDate.getDate() + 1);
+                defaultEndDate = formatDate(endDate);
+                $("#EndDate").val(defaultEndDate);
+            } else {
+                $("#EndDate").val(formatDate(endDate));
+            }
+        }
+
+        function formatDate(date) {
+            var day = ("0" + date.getDate()).slice(-2);
+            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+            var year = date.getFullYear();
+            return year + "-" + month + "-" + day;
+        }
+
+        function validateServiceDays() {
+            var serviceDays = parseInt($("#ServiceDays").val(), 10);
+
+            if (isNaN(serviceDays) || serviceDays === 0) {
+                $("#ServiceDays").addClass("is-invalid");
+                $("#serviceDaysError").text("Service days must be a non-zero number");
+            } else {
+                $("#ServiceDays").removeClass("is-invalid");
+                $("#serviceDaysError").text("");
+            }
+        }
+
+        $("form").on("submit", function (e) {
+            $(".is-invalid").removeClass("is-invalid");
+            $(".invalid-feedback").empty();
+
+            validateServiceDays(); // Call the validation function
+
+            // Perform additional validation for ProductID and ServicePreferred
+            var productId = $("#ProductID").val();
+            var servicePreferred = $("#ServicePreferred").val();
+
+            if (!productId && !servicePreferred) {
+                $("#ProductID").addClass("is-invalid");
+                $("#servicePreferredError").text("Kindly Select from the list.");
+                e.preventDefault(); // Prevent form submission if there are validation errors
+                return false;
+            }
+
+            if (!productId) {
+                $("#ProductID").addClass("is-invalid");
+                $("#productIdError").text("You must add a product before availing or ordering a service.");
+                e.preventDefault(); // Prevent form submission if there are validation errors
+                return false;
+            }
+
+            if (!servicePreferred) {
+                $("#ServicePreferred").addClass("is-invalid");
+                $("#servicePreferredError").text("Please select a service.");
+                e.preventDefault(); // Prevent form submission if there are validation errors
+                return false;
+            }
+
+            if ($(".is-invalid").length > 0) {
+                e.preventDefault(); // Prevent form submission if there are validation errors
+                return false;
+            }
+        });
+    });
+
+
+</script>
+
+<link rel="stylesheet" href="~/Scripts/jquery-ui.min.css">
+<script src="~/Scripts/jquery.min.js"></script>
+
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@

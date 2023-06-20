@@ -1,0 +1,82 @@
+﻿@model ProjectECS.Models.PreferredService
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PreferredService</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceDays)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceDays)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate, "Date")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate, "Date")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Charge.ChargesID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Charge.ChargesID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClientProduct.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClientProduct.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Client.ClientName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client.ClientName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Service.ServiceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Service.ServiceName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PreferredServiceID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

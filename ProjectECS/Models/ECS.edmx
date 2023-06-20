@@ -1,0 +1,652 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ECSWebModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Charges">
+          <Key>
+            <PropertyRef Name="ChargesID" />
+          </Key>
+          <Property Name="ChargesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChargesForServiceID" Type="int" Nullable="false" />
+          <Property Name="ChargesPerDay" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClientProducts">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Client_id" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProductServiceDetails" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClientEmail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClientPwd" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClientStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="DepartID" />
+          </Key>
+          <Property Name="DepartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DepartDesc" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmpEmail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmpDesignation" Type="int" Nullable="false" />
+          <Property Name="EmpService" Type="int" Nullable="false" />
+          <Property Name="EmpPwd" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmpImg" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmpStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentFor" Type="int" Nullable="false" />
+          <Property Name="TotalAmount" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PreferredService">
+          <Key>
+            <PropertyRef Name="PreferredServiceID" />
+          </Key>
+          <Property Name="PreferredServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Client_id" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ServicePreferred" Type="int" Nullable="false" />
+          <Property Name="Charges_id" Type="int" Nullable="false" />
+          <Property Name="ServiceDays" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ServiceStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__Charges__Charges__4222D4EF">
+          <End Role="Services" Type="Self.Services" Multiplicity="1" />
+          <End Role="Charges" Type="Self.Charges" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="Charges">
+              <PropertyRef Name="ChargesForServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientPro__Clien__7C4F7684">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="ClientProducts" Type="Self.ClientProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="ClientProducts">
+              <PropertyRef Name="Client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__EmpDe__46E78A0C">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="EmpDesignation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__EmpSe__47DBAE45">
+          <End Role="Services" Type="Self.Services" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="EmpService" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payments__Paymen__19DFD96B">
+          <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PreferredService">
+              <PropertyRef Name="PreferredServiceID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="PaymentFor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preferred__Charg__151B244E">
+          <End Role="Charges" Type="Self.Charges" Multiplicity="1" />
+          <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Charges">
+              <PropertyRef Name="ChargesID" />
+            </Principal>
+            <Dependent Role="PreferredService">
+              <PropertyRef Name="Charges_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preferred__Clien__123EB7A3">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="PreferredService">
+              <PropertyRef Name="Client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preferred__Produ__1332DBDC">
+          <End Role="ClientProducts" Type="Self.ClientProducts" Multiplicity="1" />
+          <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientProducts">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="PreferredService">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preferred__Servi__14270015">
+          <End Role="Services" Type="Self.Services" Multiplicity="1" />
+          <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="PreferredService">
+              <PropertyRef Name="ServicePreferred" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ECSWebModelStoreContainer">
+          <EntitySet Name="Charges" EntityType="Self.Charges" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientProducts" EntityType="Self.ClientProducts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PreferredService" EntityType="Self.PreferredService" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Charges__Charges__4222D4EF" Association="Self.FK__Charges__Charges__4222D4EF">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="Charges" EntitySet="Charges" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientPro__Clien__7C4F7684" Association="Self.FK__ClientPro__Clien__7C4F7684">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="ClientProducts" EntitySet="ClientProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__EmpDe__46E78A0C" Association="Self.FK__Employees__EmpDe__46E78A0C">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__EmpSe__47DBAE45" Association="Self.FK__Employees__EmpSe__47DBAE45">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payments__Paymen__19DFD96B" Association="Self.FK__Payments__Paymen__19DFD96B">
+            <End Role="PreferredService" EntitySet="PreferredService" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preferred__Charg__151B244E" Association="Self.FK__Preferred__Charg__151B244E">
+            <End Role="Charges" EntitySet="Charges" />
+            <End Role="PreferredService" EntitySet="PreferredService" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preferred__Clien__123EB7A3" Association="Self.FK__Preferred__Clien__123EB7A3">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="PreferredService" EntitySet="PreferredService" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preferred__Produ__1332DBDC" Association="Self.FK__Preferred__Produ__1332DBDC">
+            <End Role="ClientProducts" EntitySet="ClientProducts" />
+            <End Role="PreferredService" EntitySet="PreferredService" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preferred__Servi__14270015" Association="Self.FK__Preferred__Servi__14270015">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="PreferredService" EntitySet="PreferredService" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ECSWebModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Charge">
+          <Key>
+            <PropertyRef Name="ChargesID" />
+          </Key>
+          <Property Name="ChargesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChargesForServiceID" Type="Int32" Nullable="false" />
+          <Property Name="ChargesPerDay" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Service" Relationship="Self.FK__Charges__Charges__4222D4EF" FromRole="Charges" ToRole="Services" />
+          <NavigationProperty Name="PreferredServices" Relationship="Self.FK__Preferred__Charg__151B244E" FromRole="Charges" ToRole="PreferredService" />
+        </EntityType>
+        <EntityType Name="ClientProduct">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Client_id" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductServiceDetails" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK__ClientPro__Clien__7C4F7684" FromRole="ClientProducts" ToRole="Clients" />
+          <NavigationProperty Name="PreferredServices" Relationship="Self.FK__Preferred__Produ__1332DBDC" FromRole="ClientProducts" ToRole="PreferredService" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClientEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClientPwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClientStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ClientProducts" Relationship="Self.FK__ClientPro__Clien__7C4F7684" FromRole="Clients" ToRole="ClientProducts" />
+          <NavigationProperty Name="PreferredServices" Relationship="Self.FK__Preferred__Clien__123EB7A3" FromRole="Clients" ToRole="PreferredService" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartID" />
+          </Key>
+          <Property Name="DepartID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DepartDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employees__EmpDe__46E78A0C" FromRole="Departments" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmpEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmpDesignation" Type="Int32" Nullable="false" />
+          <Property Name="EmpService" Type="Int32" Nullable="false" />
+          <Property Name="EmpPwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmpImg" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmpStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__Employees__EmpDe__46E78A0C" FromRole="Employees" ToRole="Departments" />
+          <NavigationProperty Name="Service" Relationship="Self.FK__Employees__EmpSe__47DBAE45" FromRole="Employees" ToRole="Services" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentFor" Type="Int32" Nullable="false" />
+          <Property Name="TotalAmount" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PreferredService" Relationship="Self.FK__Payments__Paymen__19DFD96B" FromRole="Payments" ToRole="PreferredService" />
+        </EntityType>
+        <EntityType Name="PreferredService">
+          <Key>
+            <PropertyRef Name="PreferredServiceID" />
+          </Key>
+          <Property Name="PreferredServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Client_id" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="ServicePreferred" Type="Int32" Nullable="false" />
+          <Property Name="Charges_id" Type="Int32" Nullable="false" />
+          <Property Name="ServiceDays" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Charge" Relationship="Self.FK__Preferred__Charg__151B244E" FromRole="PreferredService" ToRole="Charges" />
+          <NavigationProperty Name="ClientProduct" Relationship="Self.FK__Preferred__Produ__1332DBDC" FromRole="PreferredService" ToRole="ClientProducts" />
+          <NavigationProperty Name="Client" Relationship="Self.FK__Preferred__Clien__123EB7A3" FromRole="PreferredService" ToRole="Clients" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK__Payments__Paymen__19DFD96B" FromRole="PreferredService" ToRole="Payments" />
+          <NavigationProperty Name="Service" Relationship="Self.FK__Preferred__Servi__14270015" FromRole="PreferredService" ToRole="Services" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ServiceStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Charges" Relationship="Self.FK__Charges__Charges__4222D4EF" FromRole="Services" ToRole="Charges" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employees__EmpSe__47DBAE45" FromRole="Services" ToRole="Employees" />
+          <NavigationProperty Name="PreferredServices" Relationship="Self.FK__Preferred__Servi__14270015" FromRole="Services" ToRole="PreferredService" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__Charges__Charges__4222D4EF">
+          <End Role="Services" Type="Self.Service" Multiplicity="1" />
+          <End Role="Charges" Type="Self.Charge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="Charges">
+              <PropertyRef Name="ChargesForServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preferred__Charg__151B244E">
+          <End Role="Charges" Type="Self.Charge" Multiplicity="1" />
+          <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Charges">
+              <PropertyRef Name="ChargesID" />
+            </Principal>
+            <Dependent Role="PreferredService">
+              <PropertyRef Name="Charges_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientPro__Clien__7C4F7684">
+          <End Role="Clients" Type="Self.Client" Multiplicity="1" />
+          <End Role="ClientProducts" Type="Self.ClientProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="ClientProducts">
+              <PropertyRef Name="Client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preferred__Produ__1332DBDC">
+          <End Role="ClientProducts" Type="Self.ClientProduct" Multiplicity="1" />
+          <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientProducts">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="PreferredService">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preferred__Clien__123EB7A3">
+          <End Role="Clients" Type="Self.Client" Multiplicity="1" />
+          <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="PreferredService">
+              <PropertyRef Name="Client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__EmpDe__46E78A0C">
+          <End Role="Departments" Type="Self.Department" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="EmpDesignation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__EmpSe__47DBAE45">
+          <End Role="Services" Type="Self.Service" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="EmpService" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payments__Paymen__19DFD96B">
+          <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="1" />
+          <End Role="Payments" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PreferredService">
+              <PropertyRef Name="PreferredServiceID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="PaymentFor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preferred__Servi__14270015">
+          <End Role="Services" Type="Self.Service" Multiplicity="1" />
+          <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="PreferredService">
+              <PropertyRef Name="ServicePreferred" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ECSWebEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Charges" EntityType="Self.Charge" />
+          <EntitySet Name="ClientProducts" EntityType="Self.ClientProduct" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="PreferredServices" EntityType="Self.PreferredService" />
+          <EntitySet Name="Services" EntityType="Self.Service" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK__Charges__Charges__4222D4EF" Association="Self.FK__Charges__Charges__4222D4EF">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="Charges" EntitySet="Charges" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preferred__Charg__151B244E" Association="Self.FK__Preferred__Charg__151B244E">
+            <End Role="Charges" EntitySet="Charges" />
+            <End Role="PreferredService" EntitySet="PreferredServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientPro__Clien__7C4F7684" Association="Self.FK__ClientPro__Clien__7C4F7684">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="ClientProducts" EntitySet="ClientProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preferred__Produ__1332DBDC" Association="Self.FK__Preferred__Produ__1332DBDC">
+            <End Role="ClientProducts" EntitySet="ClientProducts" />
+            <End Role="PreferredService" EntitySet="PreferredServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preferred__Clien__123EB7A3" Association="Self.FK__Preferred__Clien__123EB7A3">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="PreferredService" EntitySet="PreferredServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__EmpDe__46E78A0C" Association="Self.FK__Employees__EmpDe__46E78A0C">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__EmpSe__47DBAE45" Association="Self.FK__Employees__EmpSe__47DBAE45">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payments__Paymen__19DFD96B" Association="Self.FK__Payments__Paymen__19DFD96B">
+            <End Role="PreferredService" EntitySet="PreferredServices" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preferred__Servi__14270015" Association="Self.FK__Preferred__Servi__14270015">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="PreferredService" EntitySet="PreferredServices" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ECSWebModelStoreContainer" CdmEntityContainer="ECSWebEntities">
+          <EntitySetMapping Name="Charges">
+            <EntityTypeMapping TypeName="ECSWebModel.Charge">
+              <MappingFragment StoreEntitySet="Charges">
+                <ScalarProperty Name="ChargesID" ColumnName="ChargesID" />
+                <ScalarProperty Name="ChargesForServiceID" ColumnName="ChargesForServiceID" />
+                <ScalarProperty Name="ChargesPerDay" ColumnName="ChargesPerDay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientProducts">
+            <EntityTypeMapping TypeName="ECSWebModel.ClientProduct">
+              <MappingFragment StoreEntitySet="ClientProducts">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Client_id" ColumnName="Client_id" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductServiceDetails" ColumnName="ProductServiceDetails" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="ECSWebModel.Client">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientEmail" ColumnName="ClientEmail" />
+                <ScalarProperty Name="ClientPwd" ColumnName="ClientPwd" />
+                <ScalarProperty Name="ClientStatus" ColumnName="ClientStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="ECSWebModel.Department">
+              <MappingFragment StoreEntitySet="Departments">
+                <ScalarProperty Name="DepartID" ColumnName="DepartID" />
+                <ScalarProperty Name="DepartName" ColumnName="DepartName" />
+                <ScalarProperty Name="DepartDesc" ColumnName="DepartDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="ECSWebModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="EmpEmail" ColumnName="EmpEmail" />
+                <ScalarProperty Name="EmpDesignation" ColumnName="EmpDesignation" />
+                <ScalarProperty Name="EmpService" ColumnName="EmpService" />
+                <ScalarProperty Name="EmpPwd" ColumnName="EmpPwd" />
+                <ScalarProperty Name="EmpImg" ColumnName="EmpImg" />
+                <ScalarProperty Name="EmpStatus" ColumnName="EmpStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="ECSWebModel.Payment">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="PaymentFor" ColumnName="PaymentFor" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PreferredServices">
+            <EntityTypeMapping TypeName="ECSWebModel.PreferredService">
+              <MappingFragment StoreEntitySet="PreferredService">
+                <ScalarProperty Name="PreferredServiceID" ColumnName="PreferredServiceID" />
+                <ScalarProperty Name="Client_id" ColumnName="Client_id" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ServicePreferred" ColumnName="ServicePreferred" />
+                <ScalarProperty Name="Charges_id" ColumnName="Charges_id" />
+                <ScalarProperty Name="ServiceDays" ColumnName="ServiceDays" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="ECSWebModel.Service">
+              <MappingFragment StoreEntitySet="Services">
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+                <ScalarProperty Name="ServiceStatus" ColumnName="ServiceStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ECSWebModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

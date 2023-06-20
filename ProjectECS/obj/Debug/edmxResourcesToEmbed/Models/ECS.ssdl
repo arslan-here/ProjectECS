@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ECSWebModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Charges">
+    <Key>
+      <PropertyRef Name="ChargesID" />
+    </Key>
+    <Property Name="ChargesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ChargesForServiceID" Type="int" Nullable="false" />
+    <Property Name="ChargesPerDay" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClientProducts">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Client_id" Type="int" Nullable="false" />
+    <Property Name="ProductName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ProductServiceDetails" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="ClientID" />
+    </Key>
+    <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ClientEmail" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ClientPwd" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ClientStatus" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Departments">
+    <Key>
+      <PropertyRef Name="DepartID" />
+    </Key>
+    <Property Name="DepartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DepartDesc" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="EmpID" />
+    </Key>
+    <Property Name="EmpID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmpName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmpEmail" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmpDesignation" Type="int" Nullable="false" />
+    <Property Name="EmpService" Type="int" Nullable="false" />
+    <Property Name="EmpPwd" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmpImg" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmpStatus" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Payments">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PaymentFor" Type="int" Nullable="false" />
+    <Property Name="TotalAmount" Type="int" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DateTime" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PreferredService">
+    <Key>
+      <PropertyRef Name="PreferredServiceID" />
+    </Key>
+    <Property Name="PreferredServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Client_id" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="ServicePreferred" Type="int" Nullable="false" />
+    <Property Name="Charges_id" Type="int" Nullable="false" />
+    <Property Name="ServiceDays" Type="int" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="EndDate" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Services">
+    <Key>
+      <PropertyRef Name="ServiceID" />
+    </Key>
+    <Property Name="ServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ServiceName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ServiceStatus" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__Charges__Charges__4222D4EF">
+    <End Role="Services" Type="Self.Services" Multiplicity="1" />
+    <End Role="Charges" Type="Self.Charges" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Services">
+        <PropertyRef Name="ServiceID" />
+      </Principal>
+      <Dependent Role="Charges">
+        <PropertyRef Name="ChargesForServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ClientPro__Clien__7C4F7684">
+    <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+    <End Role="ClientProducts" Type="Self.ClientProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clients">
+        <PropertyRef Name="ClientID" />
+      </Principal>
+      <Dependent Role="ClientProducts">
+        <PropertyRef Name="Client_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employees__EmpDe__46E78A0C">
+    <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departments">
+        <PropertyRef Name="DepartID" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="EmpDesignation" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employees__EmpSe__47DBAE45">
+    <End Role="Services" Type="Self.Services" Multiplicity="1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Services">
+        <PropertyRef Name="ServiceID" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="EmpService" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Payments__Paymen__19DFD96B">
+    <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="1" />
+    <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PreferredService">
+        <PropertyRef Name="PreferredServiceID" />
+      </Principal>
+      <Dependent Role="Payments">
+        <PropertyRef Name="PaymentFor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Preferred__Charg__151B244E">
+    <End Role="Charges" Type="Self.Charges" Multiplicity="1" />
+    <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Charges">
+        <PropertyRef Name="ChargesID" />
+      </Principal>
+      <Dependent Role="PreferredService">
+        <PropertyRef Name="Charges_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Preferred__Clien__123EB7A3">
+    <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+    <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clients">
+        <PropertyRef Name="ClientID" />
+      </Principal>
+      <Dependent Role="PreferredService">
+        <PropertyRef Name="Client_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Preferred__Produ__1332DBDC">
+    <End Role="ClientProducts" Type="Self.ClientProducts" Multiplicity="1" />
+    <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClientProducts">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="PreferredService">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Preferred__Servi__14270015">
+    <End Role="Services" Type="Self.Services" Multiplicity="1" />
+    <End Role="PreferredService" Type="Self.PreferredService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Services">
+        <PropertyRef Name="ServiceID" />
+      </Principal>
+      <Dependent Role="PreferredService">
+        <PropertyRef Name="ServicePreferred" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ECSWebModelStoreContainer">
+    <EntitySet Name="Charges" EntityType="Self.Charges" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClientProducts" EntityType="Self.ClientProducts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PreferredService" EntityType="Self.PreferredService" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Charges__Charges__4222D4EF" Association="Self.FK__Charges__Charges__4222D4EF">
+      <End Role="Services" EntitySet="Services" />
+      <End Role="Charges" EntitySet="Charges" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ClientPro__Clien__7C4F7684" Association="Self.FK__ClientPro__Clien__7C4F7684">
+      <End Role="Clients" EntitySet="Clients" />
+      <End Role="ClientProducts" EntitySet="ClientProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employees__EmpDe__46E78A0C" Association="Self.FK__Employees__EmpDe__46E78A0C">
+      <End Role="Departments" EntitySet="Departments" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employees__EmpSe__47DBAE45" Association="Self.FK__Employees__EmpSe__47DBAE45">
+      <End Role="Services" EntitySet="Services" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Payments__Paymen__19DFD96B" Association="Self.FK__Payments__Paymen__19DFD96B">
+      <End Role="PreferredService" EntitySet="PreferredService" />
+      <End Role="Payments" EntitySet="Payments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Preferred__Charg__151B244E" Association="Self.FK__Preferred__Charg__151B244E">
+      <End Role="Charges" EntitySet="Charges" />
+      <End Role="PreferredService" EntitySet="PreferredService" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Preferred__Clien__123EB7A3" Association="Self.FK__Preferred__Clien__123EB7A3">
+      <End Role="Clients" EntitySet="Clients" />
+      <End Role="PreferredService" EntitySet="PreferredService" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Preferred__Produ__1332DBDC" Association="Self.FK__Preferred__Produ__1332DBDC">
+      <End Role="ClientProducts" EntitySet="ClientProducts" />
+      <End Role="PreferredService" EntitySet="PreferredService" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Preferred__Servi__14270015" Association="Self.FK__Preferred__Servi__14270015">
+      <End Role="Services" EntitySet="Services" />
+      <End Role="PreferredService" EntitySet="PreferredService" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

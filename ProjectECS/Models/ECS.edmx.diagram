@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="21c02182690c40edb590f2a36539c0f6" Name="Diagram1">
+        <EntityTypeShape EntityType="ECSWebModel.Charge" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECSWebModel.ClientProduct" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECSWebModel.Client" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECSWebModel.Department" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECSWebModel.Employee" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECSWebModel.Payment" Width="1.5" PointX="7.5" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECSWebModel.PreferredService" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECSWebModel.Service" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECSWebModel.sysdiagram" Width="1.5" PointX="7.75" PointY="2.125" IsExpanded="true" />
+        <AssociationConnector Association="ECSWebModel.FK__Charges__Charges__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="ECSWebModel.FK__Preferred__Charg__151B244E" ManuallyRouted="false" />
+        <AssociationConnector Association="ECSWebModel.FK__ClientPro__Clien__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="ECSWebModel.FK__Preferred__Produ__1332DBDC" ManuallyRouted="false" />
+        <AssociationConnector Association="ECSWebModel.FK__Preferred__Clien__123EB7A3" ManuallyRouted="false" />
+        <AssociationConnector Association="ECSWebModel.FK__Employees__EmpDe__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="ECSWebModel.FK__Employees__EmpSe__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="ECSWebModel.FK__Payments__Paymen__19DFD96B" ManuallyRouted="false" />
+        <AssociationConnector Association="ECSWebModel.FK__Preferred__Servi__14270015" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,45 @@
+﻿@model ProjectECS.Models.Client
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("Login", "Clients", FormMethod.Post))
+{
+    <div class="row g-3">
+        <!-- row -->
+
+        <div class="col-12">
+            <!-- input -->
+            @Html.TextBoxFor(x => x.ClientEmail, null, new { @class = "form-control", placeholder = "Email" })
+            @Html.ValidationMessageFor(x => x.ClientEmail, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-12">
+            <!-- input -->
+            <div class="password-field position-relative">
+                @Html.TextBoxFor(x => x.ClientPwd, null, new { @class = "form-control", placeholder = "Password" })
+                @Html.ValidationMessageFor(x => x.ClientPwd, "", new { @class = "text-danger" })
+
+                <span><i id="passwordToggler" class="bi bi-eye-slash"></i></span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <!-- form check -->
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <!-- label --> <label class="form-check-label" for="flexCheckDefault">
+                    Remember me
+                </label>
+            </div>
+            <div> Forgot password? <a href="forgot-password.html">Reset It</a></div>
+        </div>
+        <!-- btn -->
+        <div class="col-12 d-grid">
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </div>
+        <!-- link -->
+        <div>Don’t have an account? <a href="signup.html"> Sign Up</a></div>
+    </div>
+}

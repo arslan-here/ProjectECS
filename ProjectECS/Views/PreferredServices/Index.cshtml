@@ -1,0 +1,100 @@
+﻿@model IEnumerable<ProjectECS.Models.PreferredService>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Client Name
+        </th>
+        <th>
+            Product Name
+        </th>
+        <th>
+            Servive Type
+        </th>
+        <th>
+            Total Days
+        </th>
+        <th>
+            Charges Per Day
+        </th>
+        <th>
+            Total Amount
+        </th>
+        <th>
+            Start Date
+        </th>
+        <th>
+            End Date
+        </th>
+        <th>
+            Status
+        </th>
+
+
+
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Client.ClientName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClientProduct.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Service.ServiceName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceDays)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Charge.ChargesPerDay)
+        </td>
+        <td>
+            @(item.ServiceDays * item.Charge.ChargesPerDay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate, "Date")
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate, "Date")
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+
+
+
+        @if (Session["AdminId"] != null)
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PreferredServiceID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PreferredServiceID })
+            </td>
+        }
+        else if (item.Status == "Pending" && Session["id"] != null && Session["AdminId"] == null)
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PreferredServiceID }) |
+                @Html.ActionLink("Check out", "Create", "Payments", new { id = item.PreferredServiceID, totalAmount = item.ServiceDays * item.Charge.ChargesPerDay }, null)
+                @*@Html.ActionLink("Details", "Details", new { id = item.PreferredServiceID })*@ |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PreferredServiceID })
+            </td>
+        }
+
+    </tr>
+}
+
+</table>
