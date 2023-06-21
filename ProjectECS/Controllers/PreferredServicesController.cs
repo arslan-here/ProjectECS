@@ -18,19 +18,10 @@ namespace ProjectECS.Controllers
         // GET: PreferredServices
         public ActionResult Index()
         {
-            if (Session["AdminId"] != null)
-            {
-                var preferredServicesAdmin = db.PreferredServices.Include(p => p.Charge).Include(p => p.ClientProduct).Include(p => p.Client).Include(p => p.Service);
-                return View(preferredServicesAdmin.ToList());
-            }
-             
+            
                 // Check if the client ID is stored in the session
-                if (Session["id"] != null && Session["AdminId"] == null)
-                {
-                    // Redirect to the login page if the session is not set
-                   
-                
-
+                if (Session["id"] != null)
+                { 
                 // Retrieve the client ID from the session
                 int clientId = (int)Session["id"];
 
@@ -45,6 +36,12 @@ namespace ProjectECS.Controllers
 
                 return View(preferredServices);
             }
+            //else if(Session["AdminId"] != null)
+            //{
+            //    var preferredServicesAdmin = db.PreferredServices.Include(p => p.Charge).Include(p => p.ClientProduct).Include(p => p.Client).Include(p => p.Service);
+            //    return View(preferredServicesAdmin.ToList());
+            //}
+
             return RedirectToAction("Login", "Clients");
 
         }
@@ -294,8 +291,9 @@ namespace ProjectECS.Controllers
         {
             PreferredService preferredService = db.PreferredServices.Find(id);
             db.PreferredServices.Remove(preferredService);
-            db.SaveChanges();
+            db.SaveChanges(); 
             return RedirectToAction("Index");
+             
         }
 
         protected override void Dispose(bool disposing)

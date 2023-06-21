@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -11,148 +10,110 @@ using ProjectECS.Models;
 
 namespace ProjectECS.Controllers
 {
-    public class ClientsController : Controller
+    public class DepartmentsController : Controller
     {
         private ECSWebEntities db = new ECSWebEntities();
 
-        // GET: Clients
+        // GET: Departments
         public ActionResult Index()
         {
-            if (Session["AdminId"] != null) 
-            { 
-               return View(db.Clients.ToList());
+            if (Session["AdminId"] != null) { 
+            return View(db.Departments.ToList());
             }
             return RedirectToAction("Login", "Admin");
         }
 
-        // GET: Clients/Login
-
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        // POST: Clients/Login
-        [HttpPost]
-        public ActionResult Login(Client client)
-        {
-
-            var login = db.Clients.Where(c => c.ClientEmail == client.ClientEmail && c.ClientPwd == client.ClientPwd).FirstOrDefault();
-            if (login != null)
-            {
-                Session["id"] = login.ClientID;
-                return RedirectToAction("Create", "PreferredServices");
-            }
-
-            return View();
-
-
-
-        }
-
-
-
-
-        public ActionResult Logout()
-        {
-            // Clear the Client's authentication 
-            Session["id"] = null;
-            return View("Login"); // Redirect to the Client login page
-        }
-
-
-        // GET: Clients/Details/5
+        // GET: Departments/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = db.Clients.Find(id);
-            if (client == null)
+            Department department = db.Departments.Find(id);
+            if (department == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(department);
         }
 
-        // GET: Clients/Create
+        // GET: Departments/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Clients/Create
+        // POST: Departments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ClientID,ClientName,ClientEmail,ClientPwd,ClientStatus")] Client client)
+        public ActionResult Create([Bind(Include = "DepartID,DepartName,DepartDesc")] Department department)
         {
             if (ModelState.IsValid)
             {
-                client.ClientStatus = 1; // Set the status explicitly
-                db.Clients.Add(client);
+                db.Departments.Add(department);
                 db.SaveChanges();
-                return RedirectToAction("Login");
+                return RedirectToAction("Index");
             }
 
-            return View(client);
+            return View(department);
         }
 
-        // GET: Clients/Edit/5
+        // GET: Departments/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = db.Clients.Find(id);
-            if (client == null)
+            Department department = db.Departments.Find(id);
+            if (department == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(department);
         }
 
-        // POST: Clients/Edit/5
+        // POST: Departments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ClientID,ClientName,ClientEmail,ClientPwd,ClientStatus")] Client client)
+        public ActionResult Edit([Bind(Include = "DepartID,DepartName,DepartDesc")] Department department)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(client).State = EntityState.Modified;
+                db.Entry(department).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(client);
+            return View(department);
         }
 
-        // GET: Clients/Delete/5
+        // GET: Departments/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = db.Clients.Find(id);
-            if (client == null)
+            Department department = db.Departments.Find(id);
+            if (department == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(department);
         }
 
-        // POST: Clients/Delete/5
+        // POST: Departments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Client client = db.Clients.Find(id);
-            db.Clients.Remove(client);
+            Department department = db.Departments.Find(id);
+            db.Departments.Remove(department);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

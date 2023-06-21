@@ -1,11 +1,16 @@
 ﻿@{
     ViewBag.Title = "Admin Login";
 }
+@{
+    Layout = null;
+}
+
 
 <h2>Admin Login</h2>
 
 @using (Html.BeginForm("Login", "Admin", FormMethod.Post, new { id = "loginForm" }))
 {
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.Label("Username")
         @Html.TextBox("username", null, new { @class = "form-control" })
@@ -18,7 +23,7 @@
 
     <button type="submit" class="btn btn-primary">Login</button>
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
 }
 
 <script>

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ProjectECS.Models.PreferredService>
+@{
+    ViewBag.Title = "PreferredServiceDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>PreferredServiceDetails</h2> 
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Client Name
+        </th>
+        <th>
+            Product Name
+        </th>
+        <th>
+            Servive Type
+        </th>
+        <th>
+            Total Days
+        </th>
+        <th>
+            Charges Per Day
+        </th>
+        <th>
+            Total Amount
+        </th>
+        <th>
+            Start Date
+        </th>
+        <th>
+            End Date
+        </th>
+        <th>
+            Status
+        </th>
+
+
+
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.ClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientProduct.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Service.ServiceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceDays)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Charge.ChargesPerDay)
+            </td>
+            <td>
+                @(item.ServiceDays * item.Charge.ChargesPerDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate, "Date")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate, "Date")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+              
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "PreferredServices", new { id = item.PreferredServiceID }, null) |
+                    @Html.ActionLink("Delete", "Delete", "Admin", new { id = item.PreferredServiceID }, null)
+                </td>
+            
+
+        </tr>
+    }
+
+</table>
+

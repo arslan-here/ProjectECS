@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Admin Panel</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery.min.js"></script>
+</head>
+<body>
+    <!-- Admin panel navigation -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- Your admin panel logo or title -->
+                <a class="navbar-brand" href="#">Admin Panel</a>
+
+                <!-- Admin logout link -->
+               
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Admin panel navigation links -->
+                    @if (Session["AdminId"] != null)
+                    {
+                        @Html.ActionLink("Order Details", "PreferredServiceDetails", "Admin") 
+
+                        @Html.ActionLink("Clients List", "Index", "Clients")
+
+                        @Html.ActionLink("Departments", "Index", "Departments")
+
+                        @Html.ActionLink("Payment Details", "Index", "Payments")
+
+                        @Html.ActionLink("Admin Logout", "Logout", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                    }
+
+
+                    <!-- Add more admin panel links as needed -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin panel content -->
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Admin Panel</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

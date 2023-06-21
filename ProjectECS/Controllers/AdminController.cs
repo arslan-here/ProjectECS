@@ -1,17 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
+using ProjectECS.Models;
 
 namespace ProjectECS.Controllers
 {
     public class AdminController : Controller
     {
+        private ECSWebEntities db = new ECSWebEntities();
         // GET: Admin
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult PreferredServiceDetails()
+        {
+            if (Session["AdminId"] != null)
+            {
+                var preferredServicesAdmin = db.PreferredServices.Include(p => p.Charge).Include(p => p.ClientProduct).Include(p => p.Client).Include(p => p.Service);
+                return View(preferredServicesAdmin.ToList());
+            }
+
+            return RedirectToAction("Login", "Admin");
+        }
+
+        // GET: PreferredServices/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PreferredService preferredService = db.PreferredServices.Find(id);
+            if (preferredService == null)
+            {
+                return HttpNotFound();
+            }
+            return View(preferredService);
+        }
+
+        // POST: PreferredServices/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            PreferredService preferredService = db.PreferredServices.Find(id);
+            db.PreferredServices.Remove(preferredService);
+            db.SaveChanges();
+            return RedirectToAction("PreferredServiceDetails");
+
         }
 
         public ActionResult Login()

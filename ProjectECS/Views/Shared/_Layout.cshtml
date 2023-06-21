@@ -24,14 +24,14 @@
                 @if (Session["id"] != null)
                 {
 
-                    @Html.ActionLink("Log Out", "Logout", "Clients", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Logout", "Logout", "Clients", new { area = "" }, new { @class = "navbar-brand" })
                 }
 
-                @if (Session["AdminId"] != null)
+                @*@if (Session["AdminId"] != null)
                 {
 
-                    @Html.ActionLink("Log Out Admin", "Logout", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-                }
+                    @Html.ActionLink("Admin Logout", "Logout", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                }*@
 
 
             </div>

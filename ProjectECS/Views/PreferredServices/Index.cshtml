@@ -77,7 +77,7 @@
 
 
 
-        @if (Session["AdminId"] != null)
+        @*@if (Session["AdminId"] != null)
         {
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.PreferredServiceID }) |
@@ -85,14 +85,14 @@
             </td>
         }
         else if (item.Status == "Pending" && Session["id"] != null && Session["AdminId"] == null)
-        {
+        {*@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.PreferredServiceID }) |
                 @Html.ActionLink("Check out", "Create", "Payments", new { id = item.PreferredServiceID, totalAmount = item.ServiceDays * item.Charge.ChargesPerDay }, null)
                 @*@Html.ActionLink("Details", "Details", new { id = item.PreferredServiceID })*@ |
                 @Html.ActionLink("Delete", "Delete", new { id = item.PreferredServiceID })
             </td>
-        }
+        @*}*@
 
     </tr>
 }
