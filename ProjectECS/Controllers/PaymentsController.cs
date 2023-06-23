@@ -16,10 +16,49 @@ namespace ProjectECS.Controllers
 
         // GET: Payments
         public ActionResult Index()
-        { 
-                var payments = db.Payments.Include(p => p.PreferredService);
-                return View(payments.ToList()); 
+        {
+            if (Session["AdminId"] != null) { 
+                var payments = db.Payments.Include(p => p.PreferredService.Client)
+                    .Include(p => p.PreferredService.Service)
+                    .Include(p => p.PreferredService.Charge)
+                    .Include(p => p.PreferredService.ClientProduct);
+                return View(payments.ToList());
+            }
+            return RedirectToAction("Login", "Admin");
         }
+
+        public ActionResult Search(string query)
+        {
+
+            //var results = db.Payments
+            //    .Where(item => item.PreferredService.Client.ClientName.Contains(query) ||
+            //    item.PreferredService.Service.ServiceName.Contains(query)) 
+            //    .ToList();
+
+            //return View("Index", results);
+
+            IQueryable<Payment> queryablePayments = db.Payments;
+            List<Payment> results;
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                results = queryablePayments
+                    .Where(item => item.PreferredService.Client.ClientName.Contains(query) ||
+                                   item.PreferredService.Service.ServiceName.Contains(query) || 
+                                   item.PreferredService.ServiceDays.ToString() == query ||
+                                   item.PreferredService.ClientProduct.ProductName.Contains(query)).ToList();
+            }
+            else
+            {
+                results = queryablePayments.ToList();
+            }
+
+            ViewBag.SearchQuery = query; // Pass the search query to the view
+
+            return View("Index", results);
+
+        }
+
 
         // GET: Payments/Details/5
         public ActionResult Details(int? id)

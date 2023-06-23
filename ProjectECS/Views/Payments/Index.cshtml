@@ -6,6 +6,17 @@
 }
 
 <h2>Index</h2>
+@using (Html.BeginForm("Search", "Payments", FormMethod.Get))
+{
+    <input type="text" name="query" id="searchInput" value="@ViewBag.SearchQuery" />
+    <input type="submit" value="Search" />
+}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var searchInput = document.getElementById('searchInput');
+        searchInput.value = '@(ViewBag.SearchQuery ?? string.Empty)'; // Set the value of the search input based on ViewBag.SearchQuery
+    });
+</script>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -13,45 +24,82 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.PreferredService.Client.ClientName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PreferredService.ClientProduct.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PreferredService.Service.ServiceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PreferredService.ServiceDays)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PreferredService.Charge.ChargesPerDay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PreferredService.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PreferredService.EndDate)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.TotalAmount)
+        </th>
+        <th>
+            <span>Payment Date&Time</span>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Status)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PreferredService.Status)
-        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model)
-{
-    
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalAmount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PreferredService.Status)
-        </td>
-        
-        <td>
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreferredService.Client.ClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreferredService.ClientProduct.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreferredService.Service.ServiceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreferredService.ServiceDays)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreferredService.Charge.ChargesPerDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreferredService.StartDate, "Date")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreferredService.EndDate, "Date")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+
+
+            @*<td>
             @Html.ActionLink("Edit", "Edit", new { id = item.PaymentID }) |
             @Html.ActionLink("Details", "Details", new { id = item.PaymentID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.PaymentID })
-        </td>
-    </tr>
+        </td>*@
+        </tr>
 
-     
-}
+
+    }
 </table>
 

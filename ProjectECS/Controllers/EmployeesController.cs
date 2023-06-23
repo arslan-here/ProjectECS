@@ -50,12 +50,52 @@ namespace ProjectECS.Controllers
         // POST: Employees/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "EmpID,EmpName,EmpEmail,EmpDesignation,EmpService,EmpPwd,EmpImg,EmpStatus")] Employee employee, HttpPostedFileBase EmpImg)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+
+        //        if (EmpImg.ContentLength > 0)
+        //        {
+        //            EmpImg.SaveAs(Server.MapPath("~/Content/images/" + EmpImg.FileName));
+        //        }
+        //        employee.EmpImg = EmpImg.FileName;
+        //        employee.EmpStatus = 1;
+        //        db.Employees.Add(employee);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    ViewBag.EmpDesignation = new SelectList(db.Departments, "DepartID", "DepartName", employee.EmpDesignation);
+        //    ViewBag.EmpService = new SelectList(db.Services, "ServiceID", "ServiceName", employee.EmpService);
+        //    return View(employee);
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EmpID,EmpName,EmpEmail,EmpDesignation,EmpService,EmpPwd,EmpImg,EmpStatus")] Employee employee)
+        public ActionResult Create(Employee employee, HttpPostedFileBase EmpImg)
         {
             if (ModelState.IsValid)
             {
+                // Check if an employee with the same email already exists
+                if (db.Employees.Any(e => e.EmpEmail == employee.EmpEmail))
+                {
+                    ModelState.AddModelError("EmpEmail", "An employee with this email already exists.");
+                    // Re-populate dropdown lists if needed
+                    ViewBag.EmpDesignation = new SelectList(db.Departments, "DepartID", "DepartName", employee.EmpDesignation);
+                    ViewBag.EmpService = new SelectList(db.Services, "ServiceID", "ServiceName", employee.EmpService);
+                    return View(employee);
+                }
+
+                if (EmpImg != null && EmpImg.ContentLength > 0)
+                {
+                    EmpImg.SaveAs(Server.MapPath("~/Content/images/" + EmpImg.FileName));
+                    employee.EmpImg = EmpImg.FileName;
+                }
+
+                employee.EmpStatus = 1;
                 db.Employees.Add(employee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -65,6 +105,7 @@ namespace ProjectECS.Controllers
             ViewBag.EmpService = new SelectList(db.Services, "ServiceID", "ServiceName", employee.EmpService);
             return View(employee);
         }
+
 
         // GET: Employees/Edit/5
         public ActionResult Edit(int? id)

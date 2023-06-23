@@ -11,15 +11,35 @@ namespace ProjectECS.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.IO;
+    using System.Linq;
+     
+
     public partial class Employee
     {
         public int EmpID { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string EmpName { get; set; }
+
+        [Required]
+        [EmailAddress]
         public string EmpEmail { get; set; }
+
+        [Required]
         public int EmpDesignation { get; set; }
+
+        [Required]
         public int EmpService { get; set; }
+
+        [Required] 
+        [DataType(DataType.Password)]
         public string EmpPwd { get; set; }
+
+        [Required(ErrorMessage = "Employee image is required.")] 
         public string EmpImg { get; set; }
         public int EmpStatus { get; set; }
     
