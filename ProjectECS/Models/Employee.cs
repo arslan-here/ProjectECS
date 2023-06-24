@@ -15,8 +15,8 @@ namespace ProjectECS.Models
     using System.ComponentModel.DataAnnotations;
     using System.IO;
     using System.Linq;
-     
 
+     
     public partial class Employee
     {
         public int EmpID { get; set; }
@@ -37,6 +37,7 @@ namespace ProjectECS.Models
 
         [Required] 
         [DataType(DataType.Password)]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$", ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and have a minimum length of 8 characters.")]
         public string EmpPwd { get; set; }
 
         [Required(ErrorMessage = "Employee image is required.")] 
