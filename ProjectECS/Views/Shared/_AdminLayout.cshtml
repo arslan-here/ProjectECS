@@ -23,15 +23,19 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <!-- Admin panel navigation links -->
+
+                    @Html.ActionLink("Order Details", "PreferredServiceDetails", "Admin")
+
+                    @Html.ActionLink("Clients List", "Index", "Clients")
+
+                    @Html.ActionLink("Departments", "Index", "Departments")
+
+                    @Html.ActionLink("Payment Details", "Index", "Payments")
+
+                    @Html.ActionLink("Employee Details", "Index", "Employees")
+
                     @if (Session["AdminId"] != null)
                     {
-                        @Html.ActionLink("Order Details", "PreferredServiceDetails", "Admin") 
-
-                        @Html.ActionLink("Clients List", "Index", "Clients")
-
-                        @Html.ActionLink("Departments", "Index", "Departments")
-
-                        @Html.ActionLink("Payment Details", "Index", "Payments")
 
                         @Html.ActionLink("Admin Logout", "Logout", "Admin", new { area = "" }, new { @class = "navbar-brand" })
                     }

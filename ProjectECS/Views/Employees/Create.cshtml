@@ -99,14 +99,21 @@
  
  
 
-<script>
+<script> 
+
     $(function () {
         // Custom validation rule for password
         $.validator.addMethod("password", function (value, element) {
             // Password pattern: At least 1 uppercase letter, 1 lowercase letter, 1 digit, 1 special character, minimum 8 characters
             var pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/;
+
+            if (value.indexOf(' ') !== -1) {
+                // Display error message if space is found in the password
+                return false;
+            }
+
             return this.optional(element) || pattern.test(value);
-        }, "Password must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and have a minimum length of 8 characters.");
+        }, "Password must not contain spaces, and it must have at least one uppercase letter, one lowercase letter, one digit, one special character, and a minimum length of 8 characters.");
 
         // Custom validation rule for image file type
         $.validator.addMethod("imageFileType", function (value, element) {

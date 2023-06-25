@@ -7,84 +7,145 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Employees", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Employee</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.EmpID)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EmpName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EmpName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EmpName, "", new { @class = "text-danger" })
-            </div>
+<div class="form-horizontal">
+    <h4>Employee</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.EmpID)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EmpName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.EmpName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EmpName, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EmpEmail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EmpEmail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EmpEmail, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.EmpEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.EmpEmail, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EmpEmail, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EmpDesignation, "EmpDesignation", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("EmpDesignation", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.EmpDesignation, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.EmpDesignation, "EmpDesignation", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("EmpDesignation", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.EmpDesignation, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EmpService, "EmpService", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("EmpService", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.EmpService, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.EmpService, "EmpService", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("EmpService", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.EmpService, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EmpPwd, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EmpPwd, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EmpPwd, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.EmpPwd, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.EmpPwd, new { htmlAttributes = new { @class = "form-control", value = Model.EmpPwd } })
+            @Html.ValidationMessageFor(model => model.EmpPwd, "", new { @class = "text-danger" })
         </div>
+    </div>
+     
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EmpImg, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EmpImg, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EmpImg, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.EmpImg,"Existing Image", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.EmpImg, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" }  })
+            @Html.ValidationMessageFor(model => model.EmpImg, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
+    <div class="form-group">
+        @Html.LabelFor(model => model.EmpImg, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10"> 
+            <input type="file" name="EmpImg" id="imageFileType" class="form-control" />
+            @Html.ValidationMessageFor(model => model.EmpImg, "", new { @class = "text-danger" }) 
+
+        </div>
+    </div>
+
+    @*<div class="form-group">
             @Html.LabelFor(model => model.EmpStatus, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.EmpStatus, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.EmpStatus, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
         </div>
     </div>
+</div>
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+
+<script>
+
+    $(function () {
+        // Custom validation rule for password
+        $.validator.addMethod("password", function (value, element) {
+            // Password pattern: At least 1 uppercase letter, 1 lowercase letter, 1 digit, 1 special character, minimum 8 characters
+            var pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/;
+
+            if (value.indexOf(' ') !== -1) {
+                // Display error message if space is found in the password
+                return false;
+            }
+
+            return this.optional(element) || pattern.test(value);
+        }, "Password must not contain spaces, and it must have at least one uppercase letter, one lowercase letter, one digit, one special character, and a minimum length of 8 characters.");
+
+        // Custom validation rule for image file type
+        $.validator.addMethod("imageFileType", function (value, element) {
+            // Allowed file extensions
+            var allowedTypes = ["jpg", "jpeg", "png"];
+            var fileExtension = value.split('.').pop().toLowerCase();
+            return allowedTypes.indexOf(fileExtension) !== -1;
+        }, "Only JPEG, JPG, and PNG file types are allowed.");
+
+        // Hook up the custom validation rules to the respective input fields
+        $('[name="EmpPwd"]').rules('add', {
+            password: true
+        });
+
+        $('[name="EmpImg"]').rules('add', {
+            imageFileType: true
+        });
+
+        // Submit form handler
+        $('#createButton').click(function (e) {
+            if (!$("#employeeForm").valid()) {
+                e.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    });
+
+</script>
+
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@

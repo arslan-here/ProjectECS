@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 using ProjectECS.Models;
@@ -18,8 +19,11 @@ namespace ProjectECS.Controllers
         // GET: Employees
         public ActionResult Index()
         {
+            if (Session["AdminId"] != null) { 
             var employees = db.Employees.Include(e => e.Department).Include(e => e.Service);
             return View(employees.ToList());
+            }
+            return RedirectToAction("Login", "Admin");
         }
 
         // GET: Employees/Details/5
@@ -94,6 +98,8 @@ namespace ProjectECS.Controllers
                 {
                     EmpImg.SaveAs(Server.MapPath("~/Content/images/" + EmpImg.FileName));
                     employee.EmpImg = EmpImg.FileName;
+                    // Store the image file name in TempData
+                    TempData["ImageFileName"] = employee.EmpImg;
                 }
 
                 employee.EmpStatus = 1;
@@ -122,20 +128,33 @@ namespace ProjectECS.Controllers
             {
                 return HttpNotFound();
             }
+              
             ViewBag.EmpDesignation = new SelectList(db.Departments, "DepartID", "DepartName", employee.EmpDesignation);
             ViewBag.EmpService = new SelectList(db.Services, "ServiceID", "ServiceName", employee.EmpService);
+             
+
             return View(employee);
         }
+
+
+
 
         // POST: Employees/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmpID,EmpName,EmpEmail,EmpDesignation,EmpService,EmpPwd,EmpImg,EmpStatus")] Employee employee)
+        public ActionResult Edit([Bind(Include = "EmpID,EmpName,EmpEmail,EmpDesignation,EmpService,EmpPwd,EmpImg,EmpStatus")] Employee employee, HttpPostedFileBase EmpImg)
         {
             if (ModelState.IsValid)
             {
+                if (EmpImg != null && EmpImg.ContentLength > 0)
+                {
+                    // New file is uploaded, save it and update EmpImg property
+                    EmpImg.SaveAs(Server.MapPath("~/Content/images/" + EmpImg.FileName));
+                    employee.EmpImg = EmpImg.FileName;
+                }
+                employee.EmpStatus = 1;
                 db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

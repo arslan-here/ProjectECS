@@ -27,37 +27,7 @@ namespace ProjectECS.Controllers
             return RedirectToAction("Login", "Admin");
         }
 
-        public ActionResult Search(string query)
-        {
-
-            //var results = db.Payments
-            //    .Where(item => item.PreferredService.Client.ClientName.Contains(query) ||
-            //    item.PreferredService.Service.ServiceName.Contains(query)) 
-            //    .ToList();
-
-            //return View("Index", results);
-
-            IQueryable<Payment> queryablePayments = db.Payments;
-            List<Payment> results;
-
-            if (!string.IsNullOrEmpty(query))
-            {
-                results = queryablePayments
-                    .Where(item => item.PreferredService.Client.ClientName.Contains(query) ||
-                                   item.PreferredService.Service.ServiceName.Contains(query) || 
-                                   item.PreferredService.ServiceDays.ToString() == query ||
-                                   item.PreferredService.ClientProduct.ProductName.Contains(query)).ToList();
-            }
-            else
-            {
-                results = queryablePayments.ToList();
-            }
-
-            ViewBag.SearchQuery = query; // Pass the search query to the view
-
-            return View("Index", results);
-
-        }
+        
 
 
         // GET: Payments/Details/5
@@ -176,6 +146,38 @@ namespace ProjectECS.Controllers
             return View(payment);
         }
 
+        public ActionResult Search(string query)
+        {
+
+            //var results = db.Payments
+            //    .Where(item => item.PreferredService.Client.ClientName.Contains(query) ||
+            //    item.PreferredService.Service.ServiceName.Contains(query)) 
+            //    .ToList();
+
+            //return View("Index", results);
+
+            IQueryable<Payment> queryablePayments = db.Payments;
+            List<Payment> results;
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                results = queryablePayments
+                    .Where(item => item.PreferredService.Client.ClientName.Contains(query) ||
+                                   item.PreferredService.Service.ServiceName.Contains(query) ||
+                                   item.PreferredService.ServiceDays.ToString() == query ||
+                                   item.PreferredService.ClientProduct.ProductName.Contains(query) ||
+                                   item.PreferredService.Charge.ChargesPerDay.ToString().Contains(query)).ToList();
+            }
+            else
+            {
+                results = queryablePayments.ToList();
+            }
+
+            ViewBag.SearchQuery = query; // Pass the search query to the view
+
+            return View("Index", results);
+
+        }
 
         // GET: Payments/Edit/5
         public ActionResult Edit(int? id)

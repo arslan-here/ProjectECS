@@ -216,6 +216,7 @@
     <Content Include="Views\Departments\Index.cshtml" />
     <Content Include="Views\Admin\PreferredServiceDetails.cshtml" />
     <Content Include="Views\Admin\Delete.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

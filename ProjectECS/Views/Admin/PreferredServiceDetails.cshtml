@@ -1,14 +1,72 @@
 ﻿@model IEnumerable<ProjectECS.Models.PreferredService>
+
 @{
     ViewBag.Title = "PreferredServiceDetails";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>PreferredServiceDetails</h2> 
+<h2>PreferredServiceDetails</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+
+@using (Html.BeginForm("FilterPreferredServices", "Admin", FormMethod.Get, new { id = "searchForm" }))
+{
+    <div class="form-group">
+        @Html.Label("Client Name:")
+        @Html.TextBox("clientName", null, new { @class = "form-control", placeholder = "Enter client name" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Product Name:")
+        @Html.TextBox("productName", null, new { @class = "form-control", placeholder = "Enter product name" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Service Type:")
+        @Html.TextBox("serviceType", null, new { @class = "form-control", placeholder = "Enter service type" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Service Days:")
+        <select name="serviceDaysFilter" id = "serviceDaysFilter" class="form-control">
+            <option value="">All</option>
+            <option value="HighToLow" @(ViewBag.ServiceDaysFilter == "HighToLow" ? "selected" : "")>High to Low</option>
+            <option value="LowToHigh" @(ViewBag.ServiceDaysFilter == "LowToHigh" ? "selected" : "")>Low to High</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Total Amount:")
+        <select name="totalAmountFilter" id = "totalAmountFilter" class="form-control">
+            <option value="">All</option>
+            <option value="HighToLow" @(ViewBag.TotalAmountFilter == "HighToLow" ? "selected" : "")>High to Low</option>
+            <option value="LowToHigh" @(ViewBag.TotalAmountFilter == "LowToHigh" ? "selected" : "")>Low to High</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Start Date:")
+        @Html.TextBox("startDate", null, new { @class = "form-control", placeholder = "MM/dd/yyyy", type = "date" })
+    </div>
+    <div class="form-group">
+        @Html.Label("End Date:")
+        @Html.TextBox("endDate", null, new { @class = "form-control", placeholder = "MM/dd/yyyy", type = "date" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Status:")
+        @Html.TextBox("status", null, new { @class = "form-control", placeholder = "Enter status" })
+    </div>
+    <input type="hidden" name="resetForm" id="resetForm" value="false" />
+
+    <button type="submit" class="btn btn-primary">Search</button>
+    <button type="button" class="btn btn-secondary" onclick="resetFormFunction()">Reset</button>
+
+}
+
+
+
+
+
 <table class="table">
     <tr>
         <th>
@@ -21,13 +79,16 @@
             Servive Type
         </th>
         <th>
-            Total Days
+            
+            Service Days
         </th>
         <th>
+             
             Charges Per Day
         </th>
         <th>
-            Total Amount
+            
+            Total Charges
         </th>
         <th>
             Start Date
@@ -75,15 +136,45 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
-              
+            @if (item.Status == "Pending")
+            {
                 <td>
-                    @Html.ActionLink("Edit", "Edit", "PreferredServices", new { id = item.PreferredServiceID }, null) |
+                    @Html.ActionLink("Edit", "Edit", "Admin", new { id = item.PreferredServiceID }, null) |
                     @Html.ActionLink("Delete", "Delete", "Admin", new { id = item.PreferredServiceID }, null)
                 </td>
-            
+            }
+
 
         </tr>
     }
 
 </table>
+<script>
+    function resetFormFunction() {
+        document.getElementById("searchForm").reset();
 
+        // Clear date inputs
+        var dateInputs = document.querySelectorAll('input[type="date"]');
+        dateInputs.forEach(function (input) {
+            input.value = '';
+        });
+
+        // Reset Service Days filter
+        var serviceDaysFilter = document.getElementById("serviceDaysFilter");
+        serviceDaysFilter.selectedIndex = 0;
+
+        // Reset Total Amount filter
+        var totalAmountFilter = document.getElementById("totalAmountFilter");
+        totalAmountFilter.selectedIndex = 0;
+
+        // Submit the form with the resetForm flag set to true
+        document.getElementById("resetForm").value = true;
+        document.getElementById("searchForm").submit();
+    }
+
+
+
+
+    
+
+</script>
