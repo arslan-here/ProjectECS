@@ -1,28 +1,31 @@
-﻿@model ProjectECS.Models.Client
+﻿@model ProjectECS.Models.LoginViewModel
 
 @{
     ViewBag.Title = "Login";
     Layout = null;
 }
 
-<h2>Login</h2>
+<h2>Employee Login</h2>
 
-@using (Html.BeginForm("Login", "Clients", FormMethod.Post))
+@using (Html.BeginForm("Login", "Employees", FormMethod.Post, new { id = "loginForm" }))
 {
-      
+     
+     
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+     
     <div class="row g-3">
         <!-- row -->
 
         <div class="col-12">
             <!-- input -->
-            @Html.TextBoxFor(x => x.ClientEmail, null, new { @class = "form-control", placeholder = "Email" })
-            @Html.ValidationMessageFor(x => x.ClientEmail, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(x => x.Email, null, new { @class = "form-control", placeholder = "Email", required = "required" })
+            @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
         </div>
         <div class="col-12">
             <!-- input -->
             <div class="password-field position-relative">
-                @Html.TextBoxFor(x => x.ClientPwd, null, new { @class = "form-control", placeholder = "Password" })
-                @Html.ValidationMessageFor(x => x.ClientPwd, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(x => x.Password, null, new { @class = "form-control", placeholder = "Password", required = "required" })
+                @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
 
                 <span><i id="passwordToggler" class="bi bi-eye-slash"></i></span>
             </div>
@@ -45,3 +48,15 @@
         <div>Don’t have an account? <a href="signup.html"> Sign Up</a></div>
     </div>
 }
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.13/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#loginForm").validate();
+    });
+</script>
+
+

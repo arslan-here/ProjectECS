@@ -190,6 +190,37 @@ namespace ProjectECS.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        // POST: Clients/Login
+        [HttpPost]
+        public ActionResult Login(LoginViewModel employee)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var login = db.Employees.Where(c => c.EmpEmail == employee.Email && c.EmpPwd == employee.Password).FirstOrDefault();
+                if (login != null)
+                {
+                    Session["Empid"] = login.EmpID;
+                    Session["EmpSrvc"] = login.EmpService;
+                    return RedirectToAction("OrderDetails", "Emp");
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Invalid credentials. Please try again.";
+                }
+            }
+            
+            return View();
+
+
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

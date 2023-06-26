@@ -36,11 +36,7 @@ namespace ProjectECS.Controllers
 
                 return View(preferredServices);
             }
-            //else if(Session["AdminId"] != null)
-            //{
-            //    var preferredServicesAdmin = db.PreferredServices.Include(p => p.Charge).Include(p => p.ClientProduct).Include(p => p.Client).Include(p => p.Service);
-            //    return View(preferredServicesAdmin.ToList());
-            //}
+            
 
             return RedirectToAction("Login", "Clients");
 

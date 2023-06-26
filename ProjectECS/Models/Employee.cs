@@ -16,7 +16,18 @@ namespace ProjectECS.Models
     using System.IO;
     using System.Linq;
 
-     
+
+    public class LoginViewModel
+    {
+        [Required(ErrorMessage = "Please enter your email")]
+        [EmailAddress(ErrorMessage = "Please enter a valid email")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Please enter your password")]
+        public string Password { get; set; }
+    }
+
+
     public partial class Employee
     {
         public int EmpID { get; set; }
