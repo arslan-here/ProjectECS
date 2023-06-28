@@ -6,6 +6,11 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
+    @Html.ActionLink("Logout", "LogOut", "Emp");
+
+    <p>
+        @Html.ActionLink("Emp Details for HR", "EmpDetails", "Emp")
+    </p>
     <div>
         @RenderBody()
     </div>

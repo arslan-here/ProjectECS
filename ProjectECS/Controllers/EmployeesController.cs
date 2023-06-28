@@ -22,8 +22,9 @@ namespace ProjectECS.Controllers
             if (Session["AdminId"] != null) { 
             var employees = db.Employees.Include(e => e.Department).Include(e => e.Service);
             return View(employees.ToList());
-            }
+            } 
             return RedirectToAction("Login", "Admin");
+             
         }
 
         // GET: Employees/Details/5
@@ -104,7 +105,7 @@ namespace ProjectECS.Controllers
 
                 employee.EmpStatus = 1;
                 db.Employees.Add(employee);
-                db.SaveChanges();
+                db.SaveChanges(); 
                 return RedirectToAction("Index");
             }
 
@@ -119,21 +120,25 @@ namespace ProjectECS.Controllers
         // GET: Employees/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["AdminId"] != null )
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
-              
-            ViewBag.EmpDesignation = new SelectList(db.Departments, "DepartID", "DepartName", employee.EmpDesignation);
-            ViewBag.EmpService = new SelectList(db.Services, "ServiceID", "ServiceName", employee.EmpService);
-             
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Employee employee = db.Employees.Find(id);
+                if (employee == null)
+                {
+                    return HttpNotFound();
+                }
 
-            return View(employee);
+                ViewBag.EmpDesignation = new SelectList(db.Departments, "DepartID", "DepartName", employee.EmpDesignation);
+                ViewBag.EmpService = new SelectList(db.Services, "ServiceID", "ServiceName", employee.EmpService);
+
+
+                return View(employee);
+            }
+            return RedirectToAction("Login", "Admin");
         }
 
 
@@ -167,7 +172,9 @@ namespace ProjectECS.Controllers
         // GET: Employees/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["AdminId"] != null  )
+            {
+                if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -177,6 +184,8 @@ namespace ProjectECS.Controllers
                 return HttpNotFound();
             }
             return View(employee);
+            }
+            return RedirectToAction("Login", "Admin");
         }
 
         // POST: Employees/Delete/5

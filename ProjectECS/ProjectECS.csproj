@@ -221,6 +221,8 @@
     <Content Include="Views\Employees\Login.cshtml" />
     <Content Include="Views\Shared\_EmployeeLayout.cshtml" />
     <Content Include="Views\Emp\OrderDetails.cshtml" />
+    <Content Include="Views\Emp\EmpDetails.cshtml" />
+    <Content Include="Views\Emp\HRaddEmp.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -48,13 +48,13 @@
             @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
+            @Html.DisplayFor(modelItem => item.StartDate, "Date")
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
+            @Html.DisplayFor(modelItem => item.EndDate, "Date")
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Charge.ChargesID)
+            @Html.DisplayFor(modelItem => item.Charge.ChargesPerDay)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ClientProduct.ProductName)
@@ -65,11 +65,18 @@
         <td>
             @Html.DisplayFor(modelItem => item.Service.ServiceName)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PreferredServiceID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PreferredServiceID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PreferredServiceID })
-        </td>
+        @if (item.Status == "Amount Paid")
+        {
+            <td>
+                <button type="button" class="btn-success">Launch campaign</button>
+            </td>
+        }
+        else if (item.Status == "Pending")
+        {
+            <td>
+                <button type="button" class="btn-success">Send Reminder</button>
+            </td>
+        }
     </tr>
 }
 
