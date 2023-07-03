@@ -14,39 +14,47 @@ namespace ProjectECS.Models
     using System.ComponentModel.DataAnnotations; 
     using System.Linq;
 
-    public class ValidateCredentialsAttribute : ValidationAttribute
+    //public class ValidateCredentialsAttribute : ValidationAttribute
+    //{
+    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    //    {
+    //        var client = (Client)validationContext.ObjectInstance;
+
+    //        // Check if the email and password are provided
+    //        if (!string.IsNullOrEmpty(client.ClientEmail) && !string.IsNullOrEmpty(client.ClientPwd))
+    //        {
+    //            // Add your database validation logic here
+    //            // Replace 'YourDbContext' with your actual database context
+    //            using (var db = new ECSWebEntities())
+    //            {
+    //                var login = db.Clients.FirstOrDefault(c => c.ClientEmail == client.ClientEmail);
+
+    //                if (login != null)
+    //                {
+    //                    if (login.ClientPwd == client.ClientPwd)
+    //                    {
+    //                        return ValidationResult.Success;
+    //                    }
+    //                }
+    //            }
+
+    //            return new ValidationResult("Invalid email or password. Please try again.");
+    //        }
+
+    //        return ValidationResult.Success; // No error message if both fields are empty
+    //    }
+    //}
+
+
+    public class ClientLogin
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            var client = (Client)validationContext.ObjectInstance;
+        [Required(ErrorMessage = "Please enter your email")]
+        [EmailAddress(ErrorMessage = "Please enter a valid email")]
+        public string Email { get; set; }
 
-            // Check if the email and password are provided
-            if (!string.IsNullOrEmpty(client.ClientEmail) && !string.IsNullOrEmpty(client.ClientPwd))
-            {
-                // Add your database validation logic here
-                // Replace 'YourDbContext' with your actual database context
-                using (var db = new ECSWebEntities())
-                {
-                    var login = db.Clients.FirstOrDefault(c => c.ClientEmail == client.ClientEmail);
-
-                    if (login != null)
-                    {
-                        if (login.ClientPwd == client.ClientPwd)
-                        {
-                            return ValidationResult.Success;
-                        }
-                    }
-                }
-
-                return new ValidationResult("Invalid email or password. Please try again.");
-            }
-
-            return ValidationResult.Success; // No error message if both fields are empty
-        }
+        [Required(ErrorMessage = "Please enter your password")]
+        public string Password { get; set; }
     }
-
-
-
 
 
 

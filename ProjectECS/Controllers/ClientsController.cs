@@ -34,16 +34,19 @@ namespace ProjectECS.Controllers
 
         // POST: Clients/Login
         [HttpPost]
-        public ActionResult Login(Client client)
+        public ActionResult Login(ClientLogin clientLogin)
         {
 
-            var login = db.Clients.Where(c => c.ClientEmail == client.ClientEmail && c.ClientPwd == client.ClientPwd).FirstOrDefault();
+            var login = db.Clients.Where(c => c.ClientEmail == clientLogin.Email && c.ClientPwd == clientLogin.Password).FirstOrDefault();
             if (login != null)
             {
                 Session["id"] = login.ClientID;
                 return RedirectToAction("Create", "PreferredServices");
             }
-
+            else
+            {
+                TempData["ErrorMessage"] = "Invalid credentials. Please try again.";
+            }
             return View();
 
 
